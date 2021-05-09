@@ -1,9 +1,19 @@
 'use strict'
 
-import { app, protocol, BrowserWindow } from 'electron'
+import { app, protocol, BrowserWindow, CommandLine } from 'electron'
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer'
 const isDevelopment = process.env.NODE_ENV !== 'production'
+
+if(process.platform == 'linux'){
+  app.commandLine.appendSwitch('enable-features','UseOzonePlatform,Vulkan,WebRTCPipeWireCapturer')
+  // TODO: Fix rendering in Wayland
+  //app.commandLine.appendSwitch('ozone-platform',process.env.XDG_SESSION_TYPE)
+  app.commandLine.appendArgument('trace-warnings')
+  
+}
+
+console.log(app.commandLine.getSwitchValue('ozone-platform'))
 
 // Scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([
@@ -15,6 +25,7 @@ async function createWindow() {
   const win = new BrowserWindow({
     width: 800,
     height: 600,
+    frame: false,
     webPreferences: {
       
       // Use pluginOptions.nodeIntegration, leave this alone
@@ -79,3 +90,4 @@ if (isDevelopment) {
     })
   }
 }
+
