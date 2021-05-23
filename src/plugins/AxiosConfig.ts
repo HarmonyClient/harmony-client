@@ -9,6 +9,8 @@ export default class AxiosConfig {
 
         Vue.use(VueAxios, axios)
 
+        axios.defaults.baseURL = "https://discordapp.com/api"
+
         axios.interceptors.request.use(request => {
             console.log('Request:', request)
             return request
