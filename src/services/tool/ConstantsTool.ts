@@ -1,3 +1,3 @@
 export default class ConstantsTool {
-    static readonly TOKEN = process.env.TOKEN
+    static readonly DISCORD_API: string | undefined = process.env.DISCORD_API
 }
