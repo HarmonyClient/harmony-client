@@ -9,7 +9,7 @@ export default class User {
     @JsonProperty("discriminator", String, true)
     discriminator?: string = undefined
     @JsonProperty("avatar", String, true)
-    avatar?: string = undefined
+    _avatar?: string = undefined
     @JsonProperty("bot", Boolean, true)
     bot?: boolean = undefined
     @JsonProperty("mfa_enabled", Boolean, true)
@@ -22,4 +22,11 @@ export default class User {
     flags?: number = undefined
     @JsonProperty("premium", Boolean, true)
     premium?: boolean = undefined
+
+    get avatar(): string {
+        if (this.avatar.startsWith("a_")) {
+            return "https://cdn.discordapp.com/avatars/" + this.id + "/" + this.avatar + ".gif?size=128"
+        }
+        return "https://cdn.discordapp.com/avatars/" + this.id + "/" + this.avatar + ".png?size=128"
+    }
 }
